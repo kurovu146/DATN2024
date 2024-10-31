@@ -2,9 +2,10 @@ import React, { useRef, useEffect } from 'react';
 
 interface VideoStreamProps {
   onClose: () => void; // Thêm props để đóng video
+  videoUrl: string;
 }
 
-const VideoStream: React.FC<VideoStreamProps> = ({ onClose }) => {
+const VideoStream: React.FC<VideoStreamProps> = ({ onClose, videoUrl }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 console.log('here');
 
@@ -24,7 +25,7 @@ console.log('here');
 
       // Nếu không có camera, fallback về video local
       if (videoRef.current) {
-        videoRef.current.src = '/video.mp4'; // Đảm bảo video.mp4 nằm trong thư mục public
+        videoRef.current.src = videoUrl; // Đảm bảo video.mp4 nằm trong thư mục public
         // await videoRef.current.play(); // Phát video local
       }
     };
