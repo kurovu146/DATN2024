@@ -7,7 +7,6 @@ interface VideoStreamProps {
 
 const VideoStream: React.FC<VideoStreamProps> = ({ onClose, videoUrl }) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
-console.log('here');
 
   useEffect(() => {
     const startVideoStream = async () => {
@@ -41,14 +40,14 @@ console.log('here');
   }, []);
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+    <div style={{ position: 'absolute', width: '100%', height: '100%', margin: 'auto' }}>
       <button onClick={onClose} style={{ position: 'absolute', top: 10, right: 10, zIndex: 1000 }}>Close</button>
       <video
         ref={videoRef}
         controls
         autoPlay
         loop
-        style={{ width: '80%', maxWidth: '800px', height: 'auto', margin: 'auto', display: 'block' }}
+        style={{ width: '80%', maxWidth: '800px', height: '100%', margin: 'auto', display: 'block' }}
       >
         Your browser does not support the video tag.
       </video>
