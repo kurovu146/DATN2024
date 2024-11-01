@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import '../styles/Sidebar.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface MenuItem {
   icon: string;
   text: string;
+  path: string;
 }
 
 const menuItems: MenuItem[] = [
-  { icon: '🗺️', text: 'MAP' },
-  { icon: '📷', text: 'CAMERA' },
-  { icon: '💬', text: 'CHAT' },
-  { icon: '👥', text: 'USER' },
-  { icon: '❓', text: 'FAQs' },
+  { icon: '🗺️', text: 'MAP' , path: '' },
+  { icon: '📷', text: 'CAMERA' , path: 'camera' },
+  { icon: '💬', text: 'CHAT' , path: 'cameras' },
+  { icon: '👥', text: 'USER' , path: 'cameras' },
+  { icon: '❓', text: 'FAQs' , path: 'cameras' },
 ];
 
 const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [activeItem, setActiveItem] = useState<number | null>(0);
+  const navigate = useNavigate();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -38,7 +41,7 @@ const Sidebar: React.FC = () => {
         {menuItems.map((item, index) => (
           <li key={index} 
               className={`sidebar-item ${activeItem === index ? 'active' : ''}`}
-              onClick={() => setActiveItem(index)}
+              onClick={() => {setActiveItem(index); navigate('/' + item.path);}}
           >
             <span className="icon">{item.icon}</span>
             {isOpen && <span className="text" style={{whiteSpace: 'nowrap'}}>{item.text}</span>}

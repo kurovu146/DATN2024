@@ -1,7 +1,6 @@
 import { LatLng } from "leaflet";
-import Sidebar from "../components/Sidebar";
 import { MapContainer, TileLayer } from "react-leaflet";
-import LocationMarker from "../components/Map";
+import LocationMarker from "../components/LocationMarker";
 import { CameraInfo } from "../interfaces/Interface";
 
 const cameraIP: CameraInfo[] = [
@@ -91,36 +90,20 @@ const cameraIP: CameraInfo[] = [
   }
 ]
 
-const MapPage: React.FC = () => {
+const Map: React.FC = () => {
   return (
-    <div style={styles.container}>
-      <Sidebar /> {/* Add the Sidebar component */}
-      <div style={styles.mapContainer}>
-        <MapContainer
-          center={[21.028511, 105.804817]}
-          zoom={13}
-          style={{ width: '100%', height: '100%' }}
-          scrollWheelZoom={true}
-        >
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          {cameraIP.map((item, index) => (
-            <LocationMarker item={item} key={"c" + index} />
-          ))}
-        </MapContainer>
-      </div>
-    </div>
+    <MapContainer
+      center={[21.028511, 105.804817]}
+      zoom={13}
+      style={{ width: '100%', height: '100%' }}
+      scrollWheelZoom={true}
+    >
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      {cameraIP.map((item, index) => (
+        <LocationMarker item={item} key={"c" + index} />
+      ))}
+    </MapContainer>
   );
 };
 
-// Styles for the container and map
-const styles = {
-  container: {
-    display: 'flex',
-    height: '100vh', // Full height for the viewport
-  },
-  mapContainer: {
-    flex: 1, // The map will take up the remaining space
-  },
-};
-
-export default MapPage;
+export default Map;
