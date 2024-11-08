@@ -1,13 +1,22 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Header.css';
+import { HeaderProps } from '../interfaces/Interface';
 
-const Header: React.FC = () => {
+function Header({isOpen, toggleSidebar}: HeaderProps) {
   return (
     <header className="header">
       <div className="header-left">
-        <img src="/images/logo.svg" alt="CamSphere Logo" className="logo" />
-        <h1 className="brand">HaNoiCam</h1>
+        <div style={{display: 'flex'}}>
+          <img src="/images/logo.svg" alt="CamSphere Logo" className="logo" />
+          <h1 className="brand">HaNoiCam</h1>
+        </div>
+        <button className="toggle-button" onClick={toggleSidebar}>
+        <img
+          src={'/images/close-sidebar-icon.svg'}
+          alt="Toggle Icon"
+          className={`toggle-icon ${isOpen ? '' : 'flipped'}`} 
+        />
+      </button>
       </div>
       <div style={{display: 'flex', gap: 20}}>
         <nav className="header-nav">

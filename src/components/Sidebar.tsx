@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/Sidebar.css';
 import { Link, useNavigate } from 'react-router-dom';
-
-interface MenuItem {
-  icon: string;
-  text: string;
-  path: string;
-}
+import { MenuItem, SidebarProps } from '../interfaces/Interface';
 
 const menuItems: MenuItem[] = [
   { icon: '🗺️', text: 'MAP' , path: '' },
@@ -16,27 +11,12 @@ const menuItems: MenuItem[] = [
   { icon: '❓', text: 'FAQs' , path: 'cameras' },
 ];
 
-const Sidebar: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(true);
+function Sidebar({isOpen}: SidebarProps) {
   const [activeItem, setActiveItem] = useState<number | null>(0);
   const navigate = useNavigate();
 
-  const toggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
-      <div className="sidebar-header">
-        <img src="/images/logo.svg" alt="MIRA Bot Logo" className="logo" />
-        <button className="toggle-button" onClick={toggleSidebar}>
-        <img
-          src={'/images/close-sidebar-icon.svg'}
-          alt="Toggle Icon"
-          className={`toggle-icon ${isOpen ? '' : 'flipped'}`} 
-        />
-      </button>
-      </div>
       <ul className="sidebar-menu">
         {menuItems.map((item, index) => (
           <li key={index} 

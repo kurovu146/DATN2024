@@ -6,13 +6,6 @@
   transition: width 0.5s ease;
 }
 
-.sidebar-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 30px;
-}
-
 .sidebar.closed {
   width: 60px; /* Giảm kích thước khi đóng */
 }
@@ -21,6 +14,7 @@
   background: none;
   border: none;
   cursor: pointer;
+  padding-top: 8px;
 }
 
 .toggle-icon {

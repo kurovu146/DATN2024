@@ -1,13 +1,19 @@
-
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header"; // Make sure to import the Header component
+import { useState } from "react";
 
 function DefaultLayout({ content }: any) {
+  const [isOpen, setIsOpen] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div style={styles.container}>
-      <Header /> {/* Add Header at the top */}
+      <Header isOpen={isOpen} toggleSidebar={toggleSidebar} />
       <div style={styles.contentWrapper}>
-        <Sidebar />
+        <Sidebar isOpen={isOpen}/>
         <div style={styles.mapContainer}>
           {content}
         </div>
