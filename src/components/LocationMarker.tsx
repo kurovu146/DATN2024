@@ -1,14 +1,14 @@
 import { Marker, Popup } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
-import L, { LatLng } from "leaflet";
-import React, { useState } from 'react';
-import StreamVideo from '../StreamVideo'; // Đảm bảo bạn đã tạo component StreamVideo
+import L from "leaflet";
+import { useState } from 'react';
 import { CameraInfo } from "../interfaces/Interface";
+import StreamVideo from "./StreamVideo";
 
 // Define the custom icon
 const customIcon = new L.Icon({
   iconUrl: '/camera.png', // URL to your custom icon
-  iconSize: [8, 8], // size of the icon
+  iconSize: [16, 16], // size of the icon
 });
 
 interface LocationMarkerProps {

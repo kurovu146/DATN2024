@@ -1,25 +1,37 @@
+
 import Sidebar from "../components/Sidebar";
+import Header from "../components/Header"; // Make sure to import the Header component
 
 function DefaultLayout({ content }: any) {
   return (
     <div style={styles.container}>
-      <Sidebar />
-      <div style={styles.mapContainer}>
-        {content}
+      <Header /> {/* Add Header at the top */}
+      <div style={styles.contentWrapper}>
+        <Sidebar />
+        <div style={styles.mapContainer}>
+          {content}
+        </div>
       </div>
     </div>
   );
 }
 
-// Styles for the container and map
+// Styles for the layout
 const styles = {
   container: {
-    display: 'flex',
-    height: '100vh', // Full height for the viewport
+    display: 'flex' as const,
+    flexDirection: 'column' as const, // Explicitly declare as 'column'
+    height: '100vh', 
+  },
+  contentWrapper: {
+    display: 'flex' as const,
+    flex: 1,
   },
   mapContainer: {
-    flex: 1, // The map will take up the remaining space
+    flex: 1,
+    overflow: 'auto' as const,
   },
 };
+
 
 export default DefaultLayout;
