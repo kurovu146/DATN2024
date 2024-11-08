@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/Sidebar.css';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { MenuItem, SidebarProps } from '../interfaces/Interface';
 
 const menuItems: MenuItem[] = [

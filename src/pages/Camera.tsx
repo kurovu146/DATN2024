@@ -1,30 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import LiveStreamPlayer from '../components/LiveStreamPlayer';
 
-interface Camera {
-  id: number;
-  name: string;
-  location: string;
-}
+const Camera = () => {
+  const [streamUrl, setStreamUrl] = useState("");
 
-const cameraList: Camera[] = [
-  { id: 1, name: 'Camera 1', location: 'Location A' },
-  { id: 2, name: 'Camera 2', location: 'Location B' },
-  { id: 3, name: 'Camera 3', location: 'Location C' },
-];
+  useEffect(() => {
+    fetch('http://localhost:3001/api/v1/camera', {
+      method: 'GET',  // Định nghĩa phương thức là POST
+      headers: {
+        'Content-Type': 'application/json',  // Xác định kiểu dữ liệu là JSON
+      },
+    })
+      .then(response => response.json())
+      .then(data => setStreamUrl(data.rtmp))
+      .catch(error => console.error('Error fetching stream URL:', error));
+  }, []);
 
-const Camera: React.FC = () => {
-  return (
-    <div>
-      <h1>Camera List</h1>
-      <ul>
-        {cameraList.map((camera) => (
-          <li key={camera.id}>
-            <strong>{camera.name}</strong> - {camera.location}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  if (!streamUrl) return <p>Loading...</p>;
+
+  return <LiveStreamPlayer streamUrl={streamUrl} />;
 };
 
 export default Camera;
