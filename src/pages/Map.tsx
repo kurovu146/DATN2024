@@ -2,6 +2,8 @@ import { LatLng } from "leaflet";
 import { MapContainer, TileLayer } from "react-leaflet";
 import LocationMarker from "../components/LocationMarker";
 import { CameraInfo } from "../interfaces/Interface";
+import { useEffect, useState } from "react";
+import { useAuth } from "../components/AuthContext";
 
 const cameraIP: CameraInfo[] = [
   {
@@ -91,6 +93,25 @@ const cameraIP: CameraInfo[] = [
 ]
 
 const Map: React.FC = () => {
+  const token = localStorage.getItem('token');
+  const { user } = useAuth();
+  const [cameraList, setCameraList] = useState([]);  
+
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_API_URL}/cameras`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        setCameraList(data);
+      })
+      .catch(error => console.error('Error fetching camera data:', error));
+  }, []);
+
   return (
     <MapContainer
       center={[21.028511, 105.804817]}
@@ -99,7 +120,7 @@ const Map: React.FC = () => {
       scrollWheelZoom={true}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      {cameraIP.map((item, index) => (
+      {cameraList.map((item, index) => (
         <LocationMarker item={item} key={"c" + index} />
       ))}
     </MapContainer>

@@ -19,3 +19,13 @@ export interface HeaderProps {
 export interface SidebarProps {
   isOpen: boolean;
 }
+
+export interface CameraCreate {
+  streamKey: string,
+  userId?: number,
+  lat: string,
+  lng: string,
+  country: string,
+  city: string,
+  district: string
+}

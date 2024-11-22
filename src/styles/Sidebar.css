@@ -1,7 +1,7 @@
 .sidebar {
   width: 250px;
   background-color: #f9f9f9;
-  padding: 20px;
+  padding: 5px;
   position: relative;
   transition: width 0.5s ease;
 }
@@ -53,6 +53,11 @@
   transition: background-color 0.2s;
 }
 
+.sidebar.mini {
+  display: flex;
+  justify-content: center;
+}
+
 .sidebar-item:hover {
   background-color: #e0e0e0;
 }
@@ -82,7 +87,7 @@
   border: none;
   color: white;
   font-size: 16px;
-  padding: 10px;
+  padding: 5px;
   width: 100%;
   cursor: pointer;
   text-align: center;

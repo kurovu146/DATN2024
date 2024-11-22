@@ -13,7 +13,7 @@ const menuItems: MenuItem[] = [
 ];
 
 function Sidebar({ isOpen }: SidebarProps) {
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const [activeItem, setActiveItem] = useState<number | null>(0);
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ function Sidebar({ isOpen }: SidebarProps) {
   };
 
   return (
-    <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
+    <div className={`sidebar ${isOpen ? 'open' : 'closed mini'}`}>
       <ul className="sidebar-menu">
         {menuItems.map((item, index) => (
           <li
@@ -42,12 +42,13 @@ function Sidebar({ isOpen }: SidebarProps) {
         ))}
       </ul>
 
-      {/* Nút Logout ở dưới cùng */}
-      <div className="sidebar-footer">
-        <button className="logout-button" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
+      { user ? 
+        <div className="sidebar-footer">
+          <button className="logout-button" onClick={handleLogout}>
+            Logout
+          </button>
+        </div> : <></>
+      }
     </div>
   );
 };

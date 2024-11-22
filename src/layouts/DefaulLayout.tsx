@@ -1,8 +1,10 @@
 import Sidebar from "../components/Sidebar";
 import Header from "../components/Header"; // Make sure to import the Header component
 import { useState } from "react";
+import { useAuth } from "../components/AuthContext";
 
 function DefaultLayout({ content }: any) {
+  const {user} = useAuth();
   const [isOpen, setIsOpen] = useState(true);
 
   const toggleSidebar = () => {
@@ -15,7 +17,7 @@ function DefaultLayout({ content }: any) {
       <div style={styles.contentWrapper}>
         <Sidebar isOpen={isOpen}/>
         <div style={styles.mapContainer}>
-          {content}
+         {user ? content : <p>Login first to use this feature!</p>}
         </div>
       </div>
     </div>

@@ -4,6 +4,7 @@ import L from "leaflet";
 import { useState } from 'react';
 import { CameraInfo } from "../interfaces/Interface";
 import StreamVideo from "./StreamVideo";
+import LiveStreamPlayer from "./LiveStreamPlayer";
 
 // Define the custom icon
 const customIcon = new L.Icon({
@@ -15,7 +16,7 @@ interface LocationMarkerProps {
   item: CameraInfo;
 }
 
-function LocationMarker({ item }: LocationMarkerProps) {
+function LocationMarker({ item }: any) {
   const [showVideo, setShowVideo] = useState(false);
 
   const handleMarkerClick = () => {
@@ -24,11 +25,11 @@ function LocationMarker({ item }: LocationMarkerProps) {
 
   return (
     <>
-      <Marker position={item.position} icon={customIcon} eventHandlers={{ click: handleMarkerClick }}>
+      <Marker position={[item.lat, item.lng]} icon={customIcon} eventHandlers={{ click: handleMarkerClick }}>
         {showVideo && (
           <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.8)', zIndex: 999 }}>
             <div style={{margin: 'auto'}}>
-              <StreamVideo onClose={() => setShowVideo(false)} videoUrl={item.video}/> {/* Thêm props để đóng video */}
+              <LiveStreamPlayer onClose={() => setShowVideo(false)} streamUrl={`http://localhost:8000/live/${item.streamKey}.flv`}/> {/* Thêm props để đóng video */}
             </div>
           </div>
         )}
