@@ -7,6 +7,8 @@ import Camera from './pages/Camera';
 import LandingLayout from './layouts/LandingLayout';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
+import { AuthProvider } from './components/AuthContext';
+import ProfilePage from './pages/ProfilePage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,13 +17,16 @@ const router = createBrowserRouter(
       <Route path="login" element={<LandingLayout content={<LoginPage/>} />} />
       <Route path="signup" element={<LandingLayout content={<SignupPage/>} />} />
       <Route path="camera" element={<DefaultLayout content={<Camera/>} />} />
+      <Route path="profile" element={<DefaultLayout content={<ProfilePage />} />} />
     </Route>
   )
 );
 
 const App: React.FC = () => {
   return (
-    <RouterProvider router={router} />
+    <AuthProvider> {/* Bọc ứng dụng với AuthProvider */}
+      <RouterProvider router={router} />
+    </AuthProvider>
   );
 };
 

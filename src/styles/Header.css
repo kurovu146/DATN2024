@@ -15,7 +15,7 @@
 }
 
 .logo {
-  width: 40px; /* Adjust the size as needed */
+  width: 40px; 
   margin-right: 10px;
 }
 
@@ -44,7 +44,7 @@
 }
 
 .signup-button {
-  background-color: #a64a3e; /* Adjust color as needed */
+  background-color: #a64a3e; 
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -55,5 +55,16 @@
 }
 
 .signup-button:hover {
-  background-color: #8b3c32; /* Darken on hover */
+  background-color: #8b3c32; 
+}
+
+.header .brand {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 1; 
+  transform: translateX(0);
+}
+
+.header .brand.hidden {
+  opacity: 0; 
+  transform: translateX(-10px); 
 }

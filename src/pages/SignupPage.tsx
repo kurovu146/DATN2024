@@ -1,34 +1,85 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Auth.css';
 
 const SignupPage = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate();
+
+  // Hàm xử lý gửi form
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Ngăn trình duyệt reload trang khi submit form
+
+    // Kiểm tra xác nhận mật khẩu
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        setSuccessMessage('Account created successfully! Redirecting...');
+        setError('');
+        setTimeout(() => navigate('/login'), 2000); // Chuyển hướng sau 2 giây
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || 'Signup failed. Please try again.');
+      }
+    } catch (error) {
+      setError('Something went wrong. Please try again later.');
+    }
+  };
+
   return (
     <div className="auth-container">
-      <h2>Sign up and start building</h2>
-      <form>
+      <h1>Sign Up</h1>
+      <form onSubmit={handleSubmit}>
+        {error && <p className="error-message">{error}</p>} {/* Hiển thị lỗi */}
+        {successMessage && <p className="success-message">{successMessage}</p>} {/* Hiển thị thành công */}
+
         <label>Email *</label>
-        <input type="email" placeholder="Enter your email" required />
+        <input
+          type="email"
+          placeholder="Enter your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
 
         <label>Password *</label>
-        <div className="password-field">
-          <input type="password" placeholder="Enter your password" required />
-          <span className="show-password">Show password</span>
-        </div>
+        <input
+          type="password"
+          placeholder="Enter your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
 
-        <div className="password-requirements">
-          <p><input type="checkbox" /> At least 8 characters</p>
-          <p><input type="checkbox" /> At least 1 uppercase letter</p>
-          <p><input type="checkbox" /> At least 1 number</p>
-          <p><input type="checkbox" /> At least 1 special character</p>
-        </div>
+        <label>Confirm Password *</label>
+        <input
+          type="password"
+          placeholder="Confirm your password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+        />
 
-        <p className="terms">
-          By signing up, you agree to our <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
-        </p>
-
-        <button type="submit" className="auth-button primary disabled">Start building</button>
+        <button type="submit" className="auth-button primary">Sign up</button>
 
         <div className="auth-footer">
-          <a href="/login" className="auth-link">Login</a>
+          <a href="/login" className="auth-button secondary">Log in</a>
         </div>
       </form>
     </div>
