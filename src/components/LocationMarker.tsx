@@ -27,9 +27,9 @@ function LocationMarker({ item }: any) {
     <>
       <Marker position={[item.lat, item.lng]} icon={customIcon} eventHandlers={{ click: handleMarkerClick }}>
         {showVideo && (
-          <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.8)', zIndex: 999 }}>
+          <div style={{ position: 'absolute', display: 'flex', width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.8)', zIndex: 999 }}>
             <div style={{margin: 'auto'}}>
-              <LiveStreamPlayer onClose={() => setShowVideo(false)} streamUrl={`http://localhost:8000/live/${item.streamKey}.flv`}/> {/* Thêm props để đóng video */}
+              <LiveStreamPlayer onClose={() => setShowVideo(false)} streamUrl={`http://localhost:8000/live/${item.streamKey}.flv`} canClose={true}/> {/* Thêm props để đóng video */}
             </div>
           </div>
         )}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Camera.css'; // Đảm bảo thêm CSS tương ứng
-import { generateStreamKey } from '../libs/common';
+import { generateStreamKey } from '../utils/common';
 import { CameraCreate } from '../interfaces/Interface';
 import { useAuth } from '../components/AuthContext';
 import Popup from '../components/Popup';
@@ -44,9 +44,7 @@ const Camera = () => {
         async (position) => {
           const { latitude, longitude } = position.coords;
           await getLocationInfo(latitude, longitude - 0.063);
-          
           const str = address.split(', ');
-          // console.log(str);
           setLocation({streamKey, country: str[3], city: str[2], district: str[1], lng: longitude.toString(), lat: latitude.toString() })
         },
 
@@ -79,8 +77,6 @@ const Camera = () => {
       const responseData = await response.json();
       const newStreamKey = generateStreamKey() || 'defaultStreamKey';
       setStreamKey(newStreamKey);
-
-      // Hiển thị popup khi tạo camera thành công
       setShowPopup(true);
 
       console.log('Camera created successfully:', responseData);
@@ -92,7 +88,6 @@ const Camera = () => {
     }
   };
 
-  // Fetch camera data
   useEffect(() => {
     fetch(`${process.env.REACT_APP_API_URL}/cameras?userId=${user?.id}`, {
       method: 'GET',
@@ -113,12 +108,10 @@ const Camera = () => {
       .catch(error => console.error('Error fetching camera data:', error));
   }, []);
 
-  // Render form
   return (
     <div className="camera-page">
       <h1>Set Up Your Webcam</h1>
 
-      {/* Change Broadcasting Type */}
       <section className="webcam-setup">
         <h2>Change Broadcasting Type</h2>
         <label style={{display: 'flex', alignItems: 'center'}}>
@@ -133,10 +126,13 @@ const Camera = () => {
             Stream Key
             <input type="text" value={streamKey} readOnly />
           </label>
+          <label>
+            Server URL
+            <input type="text" value={process.env.REACT_APP_STREAM_URL} readOnly />
+          </label>
         </div>
       </section>
 
-      {/* Location & Weather */}
       <section className="location-weather">
         <h2>Location & Weather</h2>
         <button style={{width: 150}} onClick={getUserLocation}>Get Current Location</button>

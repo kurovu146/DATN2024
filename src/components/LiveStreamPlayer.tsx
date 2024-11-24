@@ -5,9 +5,10 @@ import FlvJs from 'flv.js';
 interface VideoLiveStreamProps {
   onClose: () => void; // Thêm props để đóng video
   streamUrl: string;
+  canClose: boolean;
 }
 
-const LiveStreamPlayer = ({ onClose, streamUrl }: VideoLiveStreamProps) => {
+const LiveStreamPlayer = ({ onClose, streamUrl, canClose }: VideoLiveStreamProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);  // Explicitly typing the ref
 
   useEffect(() => {
@@ -37,14 +38,14 @@ const LiveStreamPlayer = ({ onClose, streamUrl }: VideoLiveStreamProps) => {
   }, []);
 
   return (
-    <div style={{ position: 'absolute', width: '100%', height: '100%', margin: 'auto' }}>
-      <button onClick={onClose} style={{ position: 'absolute', top: 10, right: 10, zIndex: 1000 }}>Close</button>
+    <div style={{ width: '100%', height: '100%', margin: 'auto' }}>
+      { canClose ? <button onClick={onClose} style={{ position: 'absolute', top: 10, right: 10, zIndex: 1000 }}>Close</button> : null }
       <video
         ref={videoRef}
         controls
         autoPlay
         loop
-        style={{ width: '80%', maxWidth: '800px', height: '100%', margin: 'auto', display: 'block' }}
+        style={{ width: '100%', maxWidth: '1000px', height: '100%', margin: 'auto', display: 'block' }}
       >
         Your browser does not support the video tag.
       </video>
