@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ReactPlayer from 'react-player'; // React Player hỗ trợ nhiều giao thức stream
-import '../styles/VSM.css'; // Style riêng cho trang VSM
+import '../styles/VSM.css'; 
 import { CameraInterface } from '../interfaces/Interface';
 import LiveStreamPlayer from '../components/LiveStreamPlayer';
 

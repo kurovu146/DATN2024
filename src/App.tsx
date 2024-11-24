@@ -28,7 +28,7 @@ const router = createBrowserRouter(
 
 const App: React.FC = () => {
   return (
-    <AuthProvider> {/* Bọc ứng dụng với AuthProvider */}
+    <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
   );

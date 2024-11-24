@@ -77,10 +77,6 @@ const SignupPage = () => {
         />
 
         <button type="submit" className="auth-button primary">Sign up</button>
-
-        <div className="auth-footer">
-          <a href="/login" className="auth-button secondary">Log in</a>
-        </div>
       </form>
     </div>
   );

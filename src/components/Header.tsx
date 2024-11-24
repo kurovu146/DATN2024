@@ -6,7 +6,7 @@ import { useAuth } from './AuthContext';
 function Header({ isOpen, toggleSidebar }: HeaderProps) {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   
   const SU_LGButton = !user
     ? location.pathname === '/login'

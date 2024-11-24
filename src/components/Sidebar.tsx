@@ -20,9 +20,9 @@ function Sidebar({ isOpen }: SidebarProps) {
 
   // Hàm xử lý logout
   const handleLogout = () => {
-    localStorage.removeItem('token');  // Xóa token khỏi localStorage
+    localStorage.removeItem('user');
     logout();
-    navigate('/login');  // Chuyển hướng đến trang login
+    navigate('/login');
   };
 
   return (
