@@ -1,4 +1,4 @@
-import Header from "../components/Header"; // Make sure to import the Header component
+import Header from "../components/Header";
 import { useState } from "react";
 
 function DefaultLayout({ content }: any) {
@@ -20,11 +20,10 @@ function DefaultLayout({ content }: any) {
   );
 }
 
-// Styles for the layout
 const styles = {
   container: {
     display: 'flex' as const,
-    flexDirection: 'column' as const, // Explicitly declare as 'column'
+    flexDirection: 'column' as const,
     height: '100vh', 
   },
   contentWrapper: {

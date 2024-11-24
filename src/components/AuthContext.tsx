@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User } from '../interfaces/Interface';
-import { Role } from '../utils/enum';
 
 interface AuthContextProps {
   user: User | null;
@@ -15,7 +14,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const login = (userData: User) => setUser(userData);
-  const logout = () => setUser(null);
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem('user');
+  }
   const updateUser = (userData: User) => setUser(userData);
 
   useEffect(() => {

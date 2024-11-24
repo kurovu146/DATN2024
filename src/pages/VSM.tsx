@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../styles/VSM.css'; 
 import { CameraInterface } from '../interfaces/Interface';
 import LiveStreamPlayer from '../components/LiveStreamPlayer';
+import { CallAPI } from '../utils/common';
 
 const VSM = () => {
   const [cameras, setCameras] = useState<CameraInterface[]>([]);
@@ -12,20 +13,21 @@ const VSM = () => {
   });
 
   useEffect(() => {
-    // Fetch tất cả camera từ API
-    fetch('http://localhost:3001/api/cameras', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setCameras(data); // Lưu dữ liệu camera
-        setFilteredCameras(data); // Hiển thị toàn bộ ban đầu
-      })
-      .catch((error) => console.error('Error fetching cameras:', error));
+    async function getListCamera () {
+      try {
+        const response = await CallAPI('GET', '/cameras');
+
+        if (response.statusText === 'OK') {
+          setCameras(response.data);
+          setFilteredCameras(response.data);
+        }
+      } catch (error) {
+        throw new Error('Error fetching cameras!');
+      }
+      
+    }
+
+    getListCamera();
   }, []);
 
   // Xử lý lọc dữ liệu
@@ -38,11 +40,8 @@ const VSM = () => {
   };
 
   useEffect(() => {
-    // Lọc camera theo location và user
     const filtered = cameras.filter((camera) => {
-      const matchesCity = filters.city ? camera.city.toLowerCase().includes(filters.city.toLowerCase()) : true;
-      const matchesUser = filters.userId ? camera.userId.toString() === filters.userId : true;
-      return matchesCity && matchesUser;
+      return filters.city ? camera.city.toLowerCase().includes(filters.city.toLowerCase()) : true;
     });
     setFilteredCameras(filtered);
   }, [filters, cameras]);
@@ -51,7 +50,6 @@ const VSM = () => {
     <div className="vsm-page">
       <h1>Video Stream Manager</h1>
 
-      {/* Bộ lọc */}
       <div className="filters">
         <label>
           City:
@@ -63,20 +61,9 @@ const VSM = () => {
             placeholder="Enter city"
           />
         </label>
-        <label>
-          User ID:
-          <input
-            type="text"
-            name="userId"
-            value={filters.userId}
-            onChange={handleFilterChange}
-            placeholder="Enter user ID"
-          />
-        </label>
       </div>
 
-      {/* Danh sách camera */}
-      <div className="camera-list">
+       <div className="camera-list">
         {filteredCameras.map((camera) => (
           <div className="camera-item" key={camera.id}>
             <h3>
@@ -84,7 +71,7 @@ const VSM = () => {
             </h3>
             <p>User ID: {camera.userId}</p>
             <div className="camera-stream">
-              <LiveStreamPlayer onClose={() => {}} streamUrl={`http://localhost:8000/live/${camera.streamKey}.flv`} canClose={false}/>
+              <LiveStreamPlayer onClose={() => {}} streamUrl={`http://localhost:8000/live/${camera.streamKey}.flv`} canClose={false}/> 
             </div>
           </div>
         ))}

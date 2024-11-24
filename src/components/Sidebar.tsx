@@ -18,9 +18,7 @@ function Sidebar({ isOpen }: SidebarProps) {
   const [activeItem, setActiveItem] = useState<number | null>(0);
   const navigate = useNavigate();
 
-  // Hàm xử lý logout
   const handleLogout = () => {
-    localStorage.removeItem('user');
     logout();
     navigate('/login');
   };

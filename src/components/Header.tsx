@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import '../styles/Header.css';
 import { HeaderProps } from '../interfaces/Interface';
 import { useAuth } from './AuthContext';
+import '../styles/Header.css';
 
 function Header({ isOpen, toggleSidebar }: HeaderProps) {
   const location = useLocation();

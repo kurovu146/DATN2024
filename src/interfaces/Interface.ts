@@ -1,10 +1,4 @@
-import { LatLng } from "leaflet";
 import { Role } from "../utils/enum";
-
-export interface CameraInfo {
-  position: LatLng;
-  video: string;
-}
 
 export interface MenuItem {
   icon: string;

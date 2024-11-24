@@ -3,13 +3,13 @@ import Hls from 'hls.js';
 import FlvJs from 'flv.js';
 
 interface VideoLiveStreamProps {
-  onClose: () => void; // Thêm props để đóng video
+  onClose: () => void;
   streamUrl: string;
   canClose: boolean;
 }
 
 const LiveStreamPlayer = ({ onClose, streamUrl, canClose }: VideoLiveStreamProps) => {
-  const videoRef = useRef<HTMLVideoElement>(null);  // Explicitly typing the ref
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (FlvJs.isSupported() && videoRef.current) {
@@ -28,13 +28,6 @@ const LiveStreamPlayer = ({ onClose, streamUrl, canClose }: VideoLiveStreamProps
     } else if (videoRef.current && videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
       videoRef.current.src = streamUrl;
     }
-
-    return () => {
-      if (Hls.isSupported() && videoRef.current) {
-        const hls = new Hls();
-        hls.destroy();
-      }
-    };
   }, []);
 
   return (

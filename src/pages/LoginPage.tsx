@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Auth.css';
 import { useAuth } from '../components/AuthContext';
+import { CallAPI } from '../utils/common';
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -10,27 +11,20 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Hàm xử lý gửi form
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Ngăn trình duyệt reload trang khi submit form
+    e.preventDefault();
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem('token', data.token);
+      const dataInput = { email, password }
+      const response = await CallAPI('POST', '/auth/login', dataInput);
+      
+      if (response.status === 201) {
+        const data = await response.data;
+        localStorage.setItem('user', JSON.stringify(data));
         login(data);
         navigate('/');
       } else {
-        const errorData = await response.json();
-        setError(errorData.message || 'Login failed. Please try again.');
+        setError(response.statusText || 'Login failed. Please try again.');
       }
     } catch (error) {
       setError('Something went wrong. Please try again later.');
@@ -63,10 +57,6 @@ const LoginPage = () => {
         <button type="submit" className="auth-button primary">Log in</button>
 
         <a href="#" className="auth-link">Reset password</a>
-
-        <div className="auth-footer">
-          <a href="/signup" className="auth-button secondary">Sign up</a>
-        </div>
       </form>
     </div>
   );

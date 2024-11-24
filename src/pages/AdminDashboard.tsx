@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/AdminDashboard.css'; // Thêm CSS nếu cần
+import { CallAPI } from '../utils/common';
 
 interface UserWithCameras {
   id: number;
@@ -13,23 +14,17 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch data from the backend
   useEffect(() => {
+
     const fetchUsersWithCameras = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/admin/users-with-cameras', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}` // Token nếu cần
-          }
-        });
+        const response = await CallAPI('GET', 'admin/users-with-cameras');
 
-        if (!response.ok) {
+        if (response.statusText !== 'OK') {
           throw new Error(`Error: ${response.status}`);
         }
 
-        const data: UserWithCameras[] = await response.json();
+        const data: UserWithCameras[] = response.data;
         setUsers(data);
       } catch (err: any) {
         setError(err.message || 'An error occurred while fetching data');
