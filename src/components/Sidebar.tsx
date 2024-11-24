@@ -3,13 +3,14 @@ import '../styles/Sidebar.css';
 import { useNavigate } from 'react-router-dom';
 import { MenuItem, SidebarProps } from '../interfaces/Interface';
 import { useAuth } from './AuthContext';
+import { Role } from '../utils/enum';
 
 const menuItems: MenuItem[] = [
   { icon: '🗺️', text: 'MAP', path: '' },
   { icon: '📷', text: 'CAMERA', path: 'camera' },
-  { icon: '💬', text: 'CHAT', path: 'cameras' },
-  { icon: '👥', text: 'USER', path: 'cameras' },
-  { icon: '❓', text: 'FAQs', path: 'cameras' },
+  { icon: '🖼️', text: 'VSM', path: 'vsm' },
+  { icon: '👥', text: 'USER', path: 'user' },
+  { icon: '❓', text: 'FAQs', path: 'faqs' },
 ];
 
 function Sidebar({ isOpen }: SidebarProps) {
@@ -28,6 +29,8 @@ function Sidebar({ isOpen }: SidebarProps) {
     <div className={`sidebar ${isOpen ? 'open' : 'closed mini'}`}>
       <ul className="sidebar-menu">
         {menuItems.map((item, index) => (
+          index === 3 && user?.role !== Role.ADMIN ? 
+          <></> :
           <li
             key={index}
             className={`sidebar-item ${activeItem === index ? 'active' : ''}`}
@@ -37,7 +40,7 @@ function Sidebar({ isOpen }: SidebarProps) {
             }}
           >
             <span className="icon">{item.icon}</span>
-            {isOpen && <span className="text" style={{ whiteSpace: 'nowrap' }}>{item.text}</span>}
+            {isOpen && <span className="text" style={{ whiteSpace: 'nowrap' }}>{ item.text }</span>}
           </li>
         ))}
       </ul>
