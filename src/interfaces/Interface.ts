@@ -1,4 +1,5 @@
 import { LatLng } from "leaflet";
+import { Role } from "../utils/enum";
 
 export interface CameraInfo {
   position: LatLng;
@@ -28,4 +29,22 @@ export interface CameraCreate {
   country: string,
   city: string,
   district: string
+}
+
+export interface CameraInterface {
+  id: number;
+  streamKey: string,
+  userId: number,
+  lat: string,
+  lng: string,
+  country: string,
+  city: string,
+  district: string
+}
+
+export interface User {
+  id: number;
+  email: string;
+  avatar: string;
+  role: Role
 }
