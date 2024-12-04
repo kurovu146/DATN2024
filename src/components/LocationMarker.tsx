@@ -22,7 +22,7 @@ function LocationMarker({ item }: any) {
         {showVideo && (
           <div style={{ position: 'absolute', display: 'flex', width: '100%', height: '100%', backgroundColor: 'rgba(0, 0, 0, 0.8)', zIndex: 999 }}>
             <div style={{margin: 'auto'}}>
-              <LiveStreamPlayer onClose={() => setShowVideo(false)} streamUrl={`http://localhost:8000/live/${item.streamKey}.flv`} canClose={true}/>
+              <LiveStreamPlayer onClose={() => setShowVideo(false)} streamUrl={`http://localhost:8000/live/${item.streamKey}.flv`} streamKey={item.streamKey} canClose={true}/>
             </div>
           </div>
         )}

@@ -2,10 +2,14 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import LocationMarker from "../components/LocationMarker";
 import { useEffect, useState } from "react";
 import { CallAPI } from "../utils/common";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../components/AuthContext";
 
 
 const Map: React.FC = () => {
-  const [cameraList, setCameraList] = useState([]);  
+  const [cameraList, setCameraList] = useState([]);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getCameraList() {
@@ -16,7 +20,8 @@ const Map: React.FC = () => {
           setCameraList(data);
         }
       } catch (error) {
-        throw new Error('Something went wrong. Please try again later.');
+        logout();
+        navigate('/login');
       }
     }
 

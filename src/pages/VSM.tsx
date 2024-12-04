@@ -8,7 +8,7 @@ const VSM = () => {
   const [cameras, setCameras] = useState<CameraInterface[]>([]);
   const [filteredCameras, setFilteredCameras] = useState<CameraInterface[]>([]);
   const [filters, setFilters] = useState({
-    city: '',
+    district: '',
     userId: '',
   });
 
@@ -41,7 +41,7 @@ const VSM = () => {
 
   useEffect(() => {
     const filtered = cameras.filter((camera) => {
-      return filters.city ? camera.city.toLowerCase().includes(filters.city.toLowerCase()) : true;
+      return filters.district ? camera.district.toLowerCase().includes(filters.district.toLowerCase()) : true;
     });
     setFilteredCameras(filtered);
   }, [filters, cameras]);
@@ -52,13 +52,13 @@ const VSM = () => {
 
       <div className="filters">
         <label>
-          City:
+          District:
           <input
             type="text"
-            name="city"
-            value={filters.city}
+            name="district"
+            value={filters.district}
             onChange={handleFilterChange}
-            placeholder="Enter city"
+            placeholder="Enter district"
           />
         </label>
       </div>
@@ -67,11 +67,11 @@ const VSM = () => {
         {filteredCameras.map((camera) => (
           <div className="camera-item" key={camera.id}>
             <h3>
-              {camera.city} - {camera.country}
+            {camera.district} - {camera.city} - {camera.country}
             </h3>
             <p>User ID: {camera.userId}</p>
             <div className="camera-stream">
-              <LiveStreamPlayer onClose={() => {}} streamUrl={`http://localhost:8000/live/${camera.streamKey}.flv`} canClose={false}/> 
+              <LiveStreamPlayer onClose={() => {}} streamUrl={`http://localhost:8000/live/${camera.streamKey}.flv`} streamKey={camera.streamKey} canClose={false}/> 
             </div>
           </div>
         ))}
