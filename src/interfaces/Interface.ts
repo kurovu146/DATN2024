@@ -40,5 +40,6 @@ export interface User {
   id: number;
   email: string;
   avatar: string;
-  role: Role
+  role: Role;
+  token: string;
 }

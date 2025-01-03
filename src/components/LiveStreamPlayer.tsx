@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import FlvJs from 'flv.js';
 import { CallAPI } from '../utils/common';
+import { useAuth } from './AuthContext';
 
 interface VideoLiveStreamProps {
   onClose: () => void;
@@ -12,12 +13,16 @@ interface VideoLiveStreamProps {
 const LiveStreamPlayer = ({ onClose, streamUrl, streamKey, canClose }: VideoLiveStreamProps) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isRecording, setIsRecording] = useState(false);
+  const { user } = useAuth();
 
   const handleRecord = async () => {
     try {
-      const endpoint = isRecording ? "/records/stop" : "/records/start";
+      const endpoint = isRecording ? "/rtmp/stop" : "/rtmp/start";
       const response = await CallAPI("POST", endpoint, {
-        streamKey: streamKey,
+        body: {
+          streamKey,
+          userId: user?.id
+        }
       });
       if (response.status === 201) {
         setIsRecording(!isRecording);
