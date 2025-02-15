@@ -6,7 +6,7 @@ import { useAuth } from '../components/AuthContext';
 import Popup from '../components/Popup';
 
 const Camera = () => {
-  const token = localStorage.getItem('token');
+  // const user.token = localStorage.getItem('user.token');
   const { user } = useAuth();
   const [streamKey, setStreamKey] = useState('');
   const [address, userAddress] = useState('');
@@ -65,7 +65,7 @@ const Camera = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${user?.token}`,
         },
         body: JSON.stringify(data),
       });
@@ -93,7 +93,7 @@ const Camera = () => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${user?.token}`
       }
     })
       .then(response => response.json())

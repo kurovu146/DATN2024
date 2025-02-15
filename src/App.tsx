@@ -11,6 +11,7 @@ import { AuthProvider } from './components/AuthContext';
 import ProfilePage from './pages/ProfilePage';
 import VSM from './pages/VSM';
 import AdminDashboard from './pages/AdminDashboard';
+import RecordedVideos from './pages/RecordVideo';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
       <Route path="camera" element={<DefaultLayout content={<Camera/>} />} />
       <Route path="profile" element={<DefaultLayout content={<ProfilePage />} />} />
       <Route path="vsm" element={<DefaultLayout content={<VSM />} />} />
+      <Route path="record" element={<DefaultLayout content={<RecordedVideos />} />} />
       <Route path="user" element={<DefaultLayout content={<AdminDashboard />} />} />
     </Route>
   )

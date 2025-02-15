@@ -9,6 +9,7 @@ const menuItems: MenuItem[] = [
   { icon: '🗺️', text: 'MAP', path: '' },
   { icon: '📷', text: 'CAMERA', path: 'camera' },
   { icon: '🖼️', text: 'VSM', path: 'vsm' },
+  { icon: '🔴', text: 'RECORD', path: 'record' },
   { icon: '👥', text: 'USER', path: 'user' },
   { icon: '❓', text: 'FAQs', path: 'faqs' },
 ];
@@ -27,7 +28,7 @@ function Sidebar({ isOpen }: SidebarProps) {
     <div className={`sidebar ${isOpen ? 'open' : 'closed mini'}`}>
       <ul className="sidebar-menu">
         {menuItems.map((item, index) => (
-          index === 3 && user?.role !== Role.ADMIN ? 
+          index === 4 && user?.role !== Role.ADMIN ? 
           <></> :
           <li
             key={index}

@@ -6,7 +6,7 @@ interface UserWithCameras {
   id: number;
   name: string;
   email: string;
-  cameraCount: number;
+  cameras: any;
 }
 
 const AdminDashboard = () => {
@@ -18,7 +18,7 @@ const AdminDashboard = () => {
 
     const fetchUsersWithCameras = async () => {
       try {
-        const response = await CallAPI('GET', 'admin/users-with-cameras');
+        const response = await CallAPI('GET', '/users');
 
         if (response.statusText !== 'OK') {
           throw new Error(`Error: ${response.status}`);
@@ -51,7 +51,6 @@ const AdminDashboard = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Name</th>
             <th>Email</th>
             <th>Number of Cameras</th>
           </tr>
@@ -60,9 +59,8 @@ const AdminDashboard = () => {
           {users.map((user, index) => (
             <tr key={user.id}>
               <td>{index + 1}</td>
-              <td>{user.name}</td>
               <td>{user.email}</td>
-              <td>{user.cameraCount}</td>
+              <td>{user.cameras.length}</td>
             </tr>
           ))}
         </tbody>
